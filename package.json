@@ -1,0 +1,29 @@
+{
+  "name": "tienda-virtual",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "vite preview",
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mdi/font": "5.9.55",
+    "axios": "^1.4.0",
+    "pdf-lib": "^1.17.1",
+    "roboto-fontface": "*",
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6",
+    "vue-star-rating": "^2.1.0",
+    "vuetify": "npm:@vuetify/nightly@next",
+    "vuex": "^4.1.0",
+    "webfontloader": "^1.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.1",
+    "vite": "^4.3.4",
+    "vite-plugin-vuetify": "^1.0.0-alpha.12",
+    "vue-cli-plugin-vuetify": "~2.5.8"
+  }
+}
