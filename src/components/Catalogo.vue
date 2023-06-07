@@ -1,17 +1,21 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { catalogo } from '@/Javascript/catalogo.js'
+import { ref, computed, onMounted } from 'vue'
 import Filtro from '@/components/Filtro.vue';
 import axios from 'axios';
 
-axios.get('http://localhost:2908/api/libros')
-    .then((response) => {
-        const { data } = response;
-        console.log(data)
-    }).catch(error => console.log(error))
 
 // Recibe el arreglo de los libros
-const libros = computed(() => {return catalogo});
+const libros = ref(false);
+
+onMounted(() => {
+    const obtenerLibros = async () => {
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_BACKEND_URL}/api/libros`);
+            libros.value = data
+        }catch(error) { console.log(error) }
+    }
+    obtenerLibros();
+})
 
 // Por defecto esta el estado de todos los libros y sets se mostraran
 const filtro = ref('todos');
@@ -72,7 +76,7 @@ const filtrarCatalogo = () => {
 
                     <!-- Acciones del card -->
                     <v-card-actions>
-                        <router-link :to="`/libro/${libro.id}`" class="w-100">
+                        <router-link :to="`/libro/${libro._id}`" class="w-100">
                             <v-btn 
                                 class="w-100 mt-2"
                                 color="orange-darken-1"

@@ -53,7 +53,7 @@ const confirmarPedidos = async () => {
     const arregloRaw = toRaw(fetchPedidos.value)
 
     // Se inicia el metodo para generar la factura a base del array rescatado
-    await generarPDF(arregloRaw, "Cliente");
+    await generarPDF(arregloRaw, localStorage.getItem('nombre'));
 
     eliminarPedidos();
     console.log(fetchPedidos.value)

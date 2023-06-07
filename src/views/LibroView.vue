@@ -6,7 +6,7 @@
 
 <script>
 // Scrip aplicando Comp API 
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 // Componentes
@@ -19,8 +19,7 @@ export default defineComponent({
     },
     setup() {
         const router = useRoute();
-        const routeId = router.params.id
-
+        const routeId = ref(router.params.id);
         return {
             routeId,
         }

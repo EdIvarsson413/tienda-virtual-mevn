@@ -1,30 +1,3 @@
-//ANCHOR - Scrpit
-<script setup>
-import { computed, ref } from 'vue';
-import { catalogo } from '../Javascript/catalogo'
-
-const reader = new FileReader(); 
-const dialog = ref(false);
-const editar = ref(false);
-
-const id = ref(0)
-const nombre = ref('')
-const saga = ref('')
-const autor = ref('')
-const sinopsis = ref('')
-const imagen = ref([])
-const tipo = ref('')
-const precio = ref('');
-
-const libroEditar = computed(() => { return catalogo.find(libro => libro.id === id.value) })
-
-
-const editarLibro = (datos) => {
-  console.log(datos)
-  dialog.value = false;
-}
-</script>
-
 //ANCHOR - Template
 <template>
   <v-container>
@@ -61,7 +34,7 @@ const editarLibro = (datos) => {
 
       <!-- Contenido de la tabla -->
       <tbody class="tabla--overflow">
-        <tr v-for="libro in catalogo">
+        <tr v-for="libro in libros" :key="libro._id">
           <!--Imagen-->
           <td class="pa-3"> <v-img :src="`/img/${libro.imagen}.jpg`" max-width="150" max-height="150" /></td>
 
@@ -81,7 +54,7 @@ const editarLibro = (datos) => {
                       variant="plain" 
                       color="orange-darken-1" 
                       icon="mdi-pencil"
-                      @click="() => { dialog = true; editar = true; id = libro.id }"
+                      @click="() => { dialog = true; editar = true; obtenerLibro(libro._id) }"
                     />
                   </div>
                 </template>
@@ -171,14 +144,14 @@ const editarLibro = (datos) => {
 
                 <!-- Espacio para el select de tipo -->
                 <v-col cols="12" sm="6">
-                  <v-select 
-                    :items="['libro', 'boxset']" 
+                  <v-autocomplete
+                    :items="['libro', 'boxset']"
                     label="Tipo"
-                    variant="outlined" 
-                    color="orange-darken-1" 
-                    required 
+                    variant="outlined"
+                    color="orange-darken-1"
+                    required
                     v-model="tipo"
-                    :placeholder="editar ? `${libroEditar.tipo}` : ''"
+                    placeholder="Libro"
                   />
                 </v-col>
 
@@ -226,6 +199,57 @@ const editarLibro = (datos) => {
     </v-row>
   </template>
 </template>
+
+//ANCHOR - Scrpit
+<script setup>
+import { computed, ref, onMounted } from 'vue';
+import axios from 'axios'
+
+// Recibe el arreglo de los libros
+const libros = ref([]);
+
+onMounted(() => {
+    const obtenerLibros = async () => {
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_BACKEND_URL}/api/libros`);
+            libros.value = data
+            console.log(libros.value)
+        }catch(error) { console.log(error) }
+    }
+    obtenerLibros();
+})
+
+
+// Booleanos para manipular los libros
+const dialog = ref(false);
+const editar = ref(false);
+
+const id = ref('')
+const nombre = ref('')
+const saga = ref('')
+const autor = ref('')
+const sinopsis = ref('')
+const imagen = ref([])
+const tipo = ref('')
+const precio = ref('');
+
+const libroEditar = ref({});
+
+const obtenerLibro = async (id) => {
+    try {
+        const { data } = await axios(`${import.meta.env.VITE_BACKEND_URL}/api/libros/id/${id}`);
+        libroEditar.value = data;
+        console.log(libroEditar)
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+const editarLibro = (datos) => {
+  console.log(datos)
+  dialog.value = false;
+}
+</script>
 
 //ANCHOR - Style
 <style>
