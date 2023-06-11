@@ -10,21 +10,21 @@ const props = defineProps({
 })
 
 // Evento para eliminar un pedido por su id, en el modal muestra el nombre de este pedido
-const eliminar = async (id, nombre) => {
+const eliminar = async ( id, nombre ) => {
     // La alerta devuelve un true o false dependiendo de su desicion
-    const resultado = await confirmar(nombre,'¿Estas seguro de eliminar este pedido?', "Sí, eliminar");
+    const resultado = await confirmar( nombre,'¿Estas seguro de eliminar este pedido?', "Sí, eliminar" );
     
     // Si el usuario confirma su decision se inicia el metodo que elimina el pedido
-    if( resultado ) props.eliminarPedido(id);
+    if( resultado ) props.eliminarPedido( id );
 }
 
 // Evento para editar el numero de unidades de un pedido, el modal muestra el nombre del pedido
-const editar = async (id, nombre) => {
+const editar = async ( id, nombre ) => {
     // La alerta devuelve un numero
-    const resultado = await escribirInput(nombre, 'Escribe nuevas unidades de tu pedido');
+    const resultado = await escribirInput( nombre, 'Escribe nuevas unidades de tu pedido' );
     
     // Si el usuario definio un nuevo valor de unidades se inicia el metodo para cambiar su pedido
-    if( resultado ) props.editarPedido(id, resultado);
+    if( resultado ) props.editarPedido( id, resultado );
 }
 </script>
 
@@ -41,7 +41,9 @@ const editar = async (id, nombre) => {
             <v-row>
                 <!-- Espacio para mostrar la portada -->
                 <v-col cols="4">
-                    <v-img max-width="160" :src="`/img/${pedido.imagen}.jpg`"/>
+                    <v-img 
+                        max-width="160" 
+                        :src="`https://firebasestorage.googleapis.com/v0/b/libreriascastor-ecffa.appspot.com/o/folder%2F${pedido.imagen}?alt=media`"/>
                 </v-col>
 
                 <!-- Espacio para mostrar los detalles -->

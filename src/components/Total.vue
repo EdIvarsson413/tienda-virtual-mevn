@@ -12,7 +12,7 @@ const props = defineProps({
 // Evento para eliminar todos los pedidos
 const eliminarTodos = async () => {
     // La alerta devuelve un true o false dependiendo de su desicion
-    const resultado = await confirmar('Eliminar todos los pedidos','¿Estas seguro de eliminar todos los pedidos?', 'Sí, eliminar');
+    const resultado = await confirmar( 'Eliminar todos los pedidos', '¿Estas seguro de eliminar todos los pedidos?', 'Sí, eliminar' );
     
     // Si el usuario confirma su decision se inicia la funcion de eliminar todos los pedidos
     if( resultado ) props.eliminarPedidos();
@@ -21,7 +21,7 @@ const eliminarTodos = async () => {
 // Evento para terminar la compra
 const confirmarPedidos = async () => {
     // La alerta devuelve un true o false dependiendo de su desicion
-    const resultado = await confirmar('Terminar compra','¿Esto es todo lo que compraras?', 'Sí, es todo');
+    const resultado = await confirmar( 'Terminar compra','¿Esto es todo lo que compraras?', 'Sí, es todo' );
 
     // Si se termina la compra inicia la funcion
     if( resultado ) props.confirmarPedidos();

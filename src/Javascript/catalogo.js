@@ -1,3 +1,4 @@
+// Este archivo se dejó de usar en cambio a Axios
 export const catalogo = [
     {
         id: 1,

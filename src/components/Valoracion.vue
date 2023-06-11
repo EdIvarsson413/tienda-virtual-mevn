@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <!-- Espacio para mostrar las estrellas y escribir comentario, se un solo card-->
+        <!-- Espacio para mostrar las estrellas y escribir comentario, en un solo card-->
         <v-col cols="12">
             <v-card color="grey-darken-4" height="200" elevation="5">
                 <!-- Div que contiene las estrellas en el card -->
@@ -100,80 +100,90 @@
 
 <script setup>
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import StarRating from 'vue-star-rating'
 import { ok } from './Notificacion'
 
+// Definiciond e props
 const props = defineProps({
     nombreLibro: String
 })
 
-const comentarios = ref([]);
-const estrellas = ref();
-const cambiar = ref(true);
-const textoTextArea = ref('')
-const nombreUSuario = ref(localStorage.getItem('nombre'))
+// Variabels ractivas
+const comentarios = ref( [] );
+const estrellas = ref( 0 );
+const cambiar = ref( true );
+const textoTextArea = ref('');
+const nombreUSuario = ref( localStorage.getItem( 'nombre' ) );
+
+
+// Observar cambios en el prop nombreLibro
+watch(() => props.nombreLibro, () => {
+    obtenerComentarios();
+    obtenerEstrellas();
+});
+
 
 // Traer comentarios
 const obtenerComentarios = async () => {
     try {
         const { data } = await axios( `${import.meta.env.VITE_BACKEND_URL}/api/comentarios/${props.nombreLibro}` );
-        comentarios.value = data;
+        comentarios.value = data
     } catch (error) {
         console.log(error)
     }
 };
 
-onMounted(() => {
-    obtenerComentarios();
-});
-
-
 // Traer estrellas
 const obtenerEstrellas = async () => {
     try {
-        const { data } = await axios(`${import.meta.env.VITE_BACKEND_URL}/api/estrellas/${props.nombreLibro}`);
-        estrellas.value = data[0].estrellas;
-    } catch (error) {
-        //console.log(error)
+        const { data } = await axios ( `${import.meta.env.VITE_BACKEND_URL}/api/estrellas/${props.nombreLibro}` );
+        estrellas.value = data[ 0 ].estrellas;
+    } catch( error ) {
+        // Tratar error
     }
 };
 
-onMounted(() => {
-    obtenerEstrellas();
-});
-
+// agregar un comentario
 const comentar = async () => {
     try {
-        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/comentarios`, 
+        const { data } = await axios.post( `${import.meta.env.VITE_BACKEND_URL}/api/comentarios` , 
         {
             nombre: localStorage.getItem('nombre'),
             comentario: textoTextArea.value,
             libro: props.nombreLibro
         })
 
-        ok( 'Ok ;)' , data.msg)
+        // Mada mensaje al usaurio
+        ok( 'Ok ;)' , data.msg )
+
+        // Actualiza la lisatd e comenatrios en tiempo real
         comentarios.value.push({ 
             nombre: localStorage.getItem('nombre'),
             comentario: textoTextArea.value,
             libro: props.nombreLibro
         })
-    } catch (error) {
-        console.log(error)
+    } catch( error ) {
+        // Tratar error
     }
 }
 
-const agregarEstrellas = async (event) => {
+// Agregar calificacion
+const agregarEstrellas = async ( event ) => {
+    // Se obtiene las estrellas
     estrellas.value = event;
+
+    // Inicia la peticion
     try {
-        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/estrellas`, 
+        const { data } = await axios.post( `${import.meta.env.VITE_BACKEND_URL}/api/estrellas` , 
         {
             nombre: localStorage.getItem('nombre'),
             estrellas: estrellas.value,
             libro: props.nombreLibro
         })
 
-        ok( 'Ok ;)', data.msg);
+        // Envia un mensaje al usuario en respuesta
+        ok( 'Ok ;)', data.msg );
     } catch (error) {
         
     }

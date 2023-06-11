@@ -15,7 +15,7 @@
                     <v-col cols="5">
                         <v-img
                             max-width="200"
-                            :src="`/img/${libro.imagen}.jpg`"
+                            :src="`https://firebasestorage.googleapis.com/v0/b/libreriascastor-ecffa.appspot.com/o/folder%2F${libro.imagen}?alt=media`"
                             :alt="`imagen ${libro.nombre}`"
                         />
                     </v-col>

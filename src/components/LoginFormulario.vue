@@ -10,8 +10,8 @@ const contrasena = ref('');
 // Reglas del formulario
 const reglas = {
     correo: [
-        (v) => !!v || 'El correo es requerido',
-        (v) => /.+@.+\..+/.test(v) || 'El correo debe ser válido',
+        ( v ) => !!v || 'El correo es requerido',
+        ( v ) => /.+@.+\..+/.test( v ) || 'El correo debe ser válido',
     ],
     contrasena: [
         (v) => !!v || 'La contraseña es requerida',
@@ -22,8 +22,8 @@ const reglas = {
 // Peticion al servidor para inciar sesion
 const iniciarSesion = async () => { 
     // Si los campos estan vacios
-    if( [correo.value, contrasena.value].includes('') ){
-        errorMsg( 'Error :(', 'Debes llenar todos los campos');
+    if( [ correo.value, contrasena.value ].includes('') ){
+        errorMsg( 'Error :(', 'Debes llenar todos los campos' );
         return;
     }
 
@@ -37,34 +37,19 @@ const iniciarSesion = async () => {
         );
 
         // Se avisa al usuario que su inicio fue exisoto
-        ok( 'Ok ;)', data.msg);
+        ok( 'Ok ;)', data.msg );
 
         // Se guarda el jwt en local storage
-        localStorage.setItem('token', data.jwt);
-        localStorage.setItem('nombre', data.nombre)
+        localStorage.setItem( 'token', data.jwt );
+        localStorage.setItem( 'nombre', data.nombre )
 
         // En 3.5 milisegundos se recarga la pagina 
         setTimeout(() => {
             // router.push('/');
             document.location.pathname = '/'
         }, 350)
-    } catch( error ) { errorMsg( 'Error :(', error.response.data.msg) }
+    } catch( error ) { errorMsg( 'Error :(', error.response.data.msg ) }
 }
-
-// Función para iniciar sesión con Google
-const iniciarGoogle = async () => {
-    try {
-        // Realiza una solicitud al endpoint de inicio de sesión de Google en el backend
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/login/google`);
-        console.log(response.data.redirectUrl)
-        // Redirecciona al usuario a la página de inicio de sesión de Google
-        window.location.href = response.data.redirectUrl;
-    } catch (error) {
-        // Maneja el error en caso de que ocurra
-        console.error(error);
-    }
-};
-
 </script>
 
 <template>
@@ -119,14 +104,14 @@ const iniciarGoogle = async () => {
                     prepend-icon="mdi-google" 
                     variant="outlined" 
                     color="orange-darken-1"
-                    @click="iniciarGoogle">Google
+                >Google
                 </v-btn>
-                <!-- <v-btn 
+                <v-btn 
                     class="mx-3" 
                     prepend-icon="mdi-github" 
                     variant="outlined" 
                     color="orange-darken-1">GitHub
-                </v-btn> -->
+                </v-btn>
             </div>
         </v-card>
     </v-container>
