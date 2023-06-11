@@ -1,29 +1,23 @@
-# tienda-virtual
+# Tienda virtual
+Este es el proyecto de la materia de Pila Completa I con MEVN (MongoDB, ExpressJs, VueJs y NodeJs)
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
+## Recomiendo instalar
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Iniciar proyecto
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Despues ejecutar
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Sobre el proyecto
+Esta es una simulación de una tienda virtual de libros en el que hay 2 roles, un usuario común y un administrador, estos roles están determinados en el servidor con la validacion con sus credenciales (nombre de usuario y contraseña). 
 
-```sh
-npm run build
-```
+Para las imagenes se empleo el servicio de Firebase Storage para subir a estas y mediante el link de acceso se implementa en el código para que sea leida junto con el nombre del libro.
